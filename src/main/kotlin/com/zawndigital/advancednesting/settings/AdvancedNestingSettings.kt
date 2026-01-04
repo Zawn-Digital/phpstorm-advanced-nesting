@@ -19,9 +19,19 @@ class AdvancedNestingSettings : PersistentStateComponent<AdvancedNestingSettings
 
     /**
      * File extensions that support directory nesting (without the dot).
-     * For example: ["php", "js", "ts"]
+     * Default includes common languages for component/concern patterns.
      */
-    var enabledExtensions: MutableList<String> = mutableListOf("php")
+    var enabledExtensions: MutableList<String> = mutableListOf(
+        "php",  // Laravel traits/concerns
+        "rb",   // Rails concerns
+        "vue",  // Vue components
+        "js",   // JavaScript components
+        "ts",   // TypeScript components
+        "jsx",  // React components
+        "tsx",  // React TypeScript components
+        "py",   // Python modules
+        "go"    // Go packages
+    )
 
     /**
      * Whether the plugin is enabled globally.
