@@ -22,6 +22,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.2.0</h3>
+    <ul>
+        <li>Fixed: Tree now refreshes immediately when settings are changed</li>
+        <li>Improved: Settings panel moved to Editor → General (near File Nesting)</li>
+        <li>Added: Help text with link to standard File Nesting settings</li>
+    </ul>
     <h3>1.1.0</h3>
     <ul>
         <li>Added Settings UI for configurable file extensions</li>
@@ -52,9 +58,13 @@
 
         <!-- Settings UI -->
         <projectConfigurable
-            parentId="editor"
+            parentId="editor.general"
             instance="com.zawndigital.advancednesting.settings.AdvancedNestingConfigurable"
             id="editor.advanced.nesting"
             displayName="Advanced Nesting"/>
+
+        <!-- Project View Refresh on Settings Change -->
+        <postStartupActivity
+            implementation="com.zawndigital.advancednesting.settings.AdvancedNestingTreeRefreshListener"/>
     </extensions>
 </idea-plugin>

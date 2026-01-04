@@ -1,11 +1,15 @@
 package com.zawndigital.advancednesting.settings
 
+import com.intellij.openapi.options.ShowSettingsUtil
+import com.intellij.openapi.project.Project
+import com.intellij.ui.HyperlinkLabel
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.JBUI
+import com.intellij.util.ui.UIUtil
 import java.awt.BorderLayout
 import javax.swing.*
 
@@ -14,7 +18,7 @@ import javax.swing.*
  *
  * Allows users to configure which file extensions support directory nesting.
  */
-class AdvancedNestingSettingsPanel {
+class AdvancedNestingSettingsPanel(private val project: Project) {
 
     private val enabledCheckBox = JBCheckBox("Enable Advanced Nesting")
     private val extensionListModel = DefaultListModel<String>()
@@ -39,6 +43,23 @@ class AdvancedNestingSettingsPanel {
     fun createPanel(): JPanel {
         setupListeners()
 
+        val helpText = JLabel("<html><b>Nests directories under matching files</b> (e.g., User.php contains User/ directory).<br>" +
+                "For standard file-to-file nesting, use the built-in File Nesting settings.</html>").apply {
+            foreground = UIUtil.getContextHelpForeground()
+        }
+
+        val fileNestingLink = HyperlinkLabel("Open File Nesting settings").apply {
+            addHyperlinkListener {
+                ShowSettingsUtil.getInstance().showSettingsDialog(project, "File Nesting")
+            }
+        }
+
+        val helpPanel = JPanel(BorderLayout()).apply {
+            border = JBUI.Borders.empty(0, 0, 10, 0)
+            add(helpText, BorderLayout.NORTH)
+            add(fileNestingLink, BorderLayout.SOUTH)
+        }
+
         val listPanel = JPanel(BorderLayout()).apply {
             border = JBUI.Borders.empty(5)
             add(JBScrollPane(extensionList), BorderLayout.CENTER)
@@ -59,6 +80,7 @@ class AdvancedNestingSettingsPanel {
         }
 
         return FormBuilder.createFormBuilder()
+            .addComponent(helpPanel)
             .addComponent(enabledCheckBox)
             .addSeparator()
             .addLabeledComponent("Enabled extensions:", listPanel, true)

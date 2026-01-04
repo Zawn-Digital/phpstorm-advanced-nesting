@@ -18,7 +18,7 @@ class AdvancedNestingConfigurable(private val project: Project) : SearchableConf
     override fun getDisplayName(): String = "Advanced Nesting"
 
     override fun createComponent(): JComponent {
-        settingsPanel = AdvancedNestingSettingsPanel()
+        settingsPanel = AdvancedNestingSettingsPanel(project)
         return settingsPanel!!.createPanel()
     }
 
