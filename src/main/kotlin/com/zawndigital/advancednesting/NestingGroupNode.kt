@@ -47,7 +47,7 @@ class NestingGroupNode(
     /**
      * This is key: return the file's virtual file so navigation works.
      */
-    override fun getVirtualFile() = fileNode.virtualFile
+    public override fun getVirtualFile() = fileNode.virtualFile
 
     /**
      * Tell the tree to prefer navigation over expansion on double-click.

@@ -121,6 +121,128 @@ class AdvancedNestingTest : BasePlatformTestCase() {
         assertTrue(result.contains(modelsDirNode))
     }
 
+    fun `test nesting group node supports navigation`() {
+        val file = myFixture.addFileToProject("User.php", "<?php class User {}")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        val groupNode = result.first() as NestingGroupNode
+
+        // Verify navigation capabilities
+        assertTrue(groupNode.canNavigate())
+        assertTrue(groupNode.canNavigateToSource())
+
+        // Verify virtual file points to the PHP file, not the directory
+        assertEquals(file.virtualFile, groupNode.virtualFile)
+
+        // Verify expandOnDoubleClick is false (double-click opens file instead of expanding)
+        assertFalse(groupNode.expandOnDoubleClick())
+    }
+
+    fun `test works with Ruby files`() {
+        val file = myFixture.addFileToProject("User.rb", "class User; end")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with TypeScript files`() {
+        val file = myFixture.addFileToProject("User.ts", "class User {}")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with Vue files`() {
+        val file = myFixture.addFileToProject("User.vue", "<template><div>User</div></template>")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with Go files`() {
+        val file = myFixture.addFileToProject("User.go", "package main")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with Python files`() {
+        val file = myFixture.addFileToProject("User.py", "class User: pass")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with JSX files`() {
+        val file = myFixture.addFileToProject("User.jsx", "export const User = () => <div>User</div>")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
+    fun `test works with TSX files`() {
+        val file = myFixture.addFileToProject("User.tsx", "export const User = () => <div>User</div>")
+        val dir = myFixture.tempDirFixture.findOrCreateDir("User")
+        val psiDir = psiManager.findDirectory(dir)!!
+
+        val fileNode = PsiFileNode(project, file, settings)
+        val dirNode = PsiDirectoryNode(project, psiDir, settings)
+
+        val result = provider.modify(mockParent, listOf(fileNode, dirNode), settings)
+
+        assertEquals(1, result.size)
+        assertTrue(result.first() is NestingGroupNode)
+    }
+
     // Helpers
 
     private val mockParent: AbstractTreeNode<*>

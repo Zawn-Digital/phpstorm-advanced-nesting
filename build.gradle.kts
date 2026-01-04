@@ -24,6 +24,21 @@ dependencies {
     }
 }
 
+tasks.test {
+    // Suppress plugin initialization errors for non-essential plugins during tests
+    jvmArgs(
+        "-Didea.fatal.error.notification=disabled",
+        "-Didea.is.internal=true",
+        "-Didea.plugin.in.sandbox.mode=true",
+        "-Xmx2g"
+    )
+
+    // Don't fail tests on stderr output from plugin initialization
+    testLogging {
+        showStandardStreams = false
+    }
+}
+
 kotlin {
     jvmToolchain(21)
 }
