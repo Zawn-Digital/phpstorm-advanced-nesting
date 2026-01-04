@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.zawndigital"
-version = "1.3.0"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -17,8 +17,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-    testImplementation("org.mockito:mockito-core:5.10.0")
 
     intellijPlatform {
         phpstorm(providers.gradleProperty("platformVersion"))

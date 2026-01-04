@@ -5,58 +5,53 @@ import com.intellij.ide.projectView.ViewSettings
 import com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode
 import com.intellij.ide.util.treeView.AbstractTreeNode
-import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiFile
 
 /**
- * A custom tree node that displays as a file but contains a directory's children.
+ * A custom tree node that wraps a file and shows directory children.
  *
- * This enables the visual nesting pattern where `User.php` appears in the tree
- * with an expansion arrow, and expanding it reveals the contents of the `User/` directory.
- *
- * @property fileNode The PHP file node (e.g., User.php) used for display
- * @property directoryNode The matching directory node (e.g., User/) providing children
- * @property settings View settings from the current project view
+ * Unlike a standard PsiFileNode, this node appears as a file but has children
+ * from a matching directory. Double-clicking navigates to the file.
  */
 class NestingGroupNode(
     private val fileNode: PsiFileNode,
     private val directoryNode: PsiDirectoryNode,
-    private val settings: ViewSettings?
-) : AbstractTreeNode<PsiDirectory>(fileNode.project, directoryNode.value) {
+    settings: ViewSettings?
+) : AbstractTreeNode<PsiFile>(fileNode.project, fileNode.value) {
 
     /**
      * Returns the children from the nested directory.
-     *
-     * This is what makes the grouping work: when the user expands this node,
-     * they see the directory's contents, not the file's children.
      */
     override fun getChildren(): Collection<AbstractTreeNode<*>> {
         return directoryNode.children
     }
 
     /**
-     * Updates the presentation to display as the file.
-     *
-     * Delegates to the file node so this appears exactly like a regular PHP file
-     * in the tree, but with children (expansion arrow) when a matching directory exists.
+     * Display as the file.
      */
-    override fun update(presentation: PresentationData) {
-        fileNode.update(presentation)
+    override fun update(data: PresentationData) {
+        fileNode.update(data)
     }
 
     /**
-     * Enables navigation to the file when clicked.
-     */
-    override fun canNavigate(): Boolean = fileNode.canNavigate()
-
-    /**
-     * Enables "Navigate to Source" action.
-     */
-    override fun canNavigateToSource(): Boolean = fileNode.canNavigateToSource()
-
-    /**
-     * Navigates to the file (not the directory).
+     * Navigate to the file when clicked.
      */
     override fun navigate(requestFocus: Boolean) {
         fileNode.navigate(requestFocus)
     }
+
+    override fun canNavigate(): Boolean = fileNode.canNavigate()
+
+    override fun canNavigateToSource(): Boolean = fileNode.canNavigateToSource()
+
+    /**
+     * This is key: return the file's virtual file so navigation works.
+     */
+    override fun getVirtualFile() = fileNode.virtualFile
+
+    /**
+     * Tell the tree to prefer navigation over expansion on double-click.
+     * This makes it behave like IntelliJ's built-in file nesting.
+     */
+    override fun expandOnDoubleClick(): Boolean = false
 }
