@@ -1,0 +1,37 @@
+<idea-plugin>
+    <id>com.zawndigital.advanced-nesting</id>
+    <name>Advanced Nesting</name>
+    <vendor email="anthonylawrence66@gmail.com" url="https://zawndigital.com">Zawn Digital</vendor>
+
+    <description><![CDATA[
+    <p>Nest directories under files with matching names in the project tree view.</p>
+
+    <p>Organizes your codebase with Rails/Laravel-style concern patterns:</p>
+    <ul>
+        <li><code>User.php</code> + <code>User/</code> directory → directory nests under file</li>
+        <li>Makes concern directories collapsible under their parent files</li>
+        <li>Cleaner project tree for domain-driven design patterns</li>
+    </ul>
+
+    <p><strong>Current version:</strong> Supports PHP files (.php extension) with case-insensitive matching.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <h3>1.0.0</h3>
+    <ul>
+        <li>Initial release</li>
+        <li>Support for PHP file and directory nesting</li>
+        <li>Case-insensitive matching (User.php matches User/, user/, or USER/)</li>
+    </ul>
+    ]]></change-notes>
+
+    <!-- Require PhpStorm 2023.3+ -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <treeStructureProvider
+            implementation="com.zawndigital.advancednesting.AdvancedNestingTreeProvider"
+            order="last"/>
+    </extensions>
+</idea-plugin>
