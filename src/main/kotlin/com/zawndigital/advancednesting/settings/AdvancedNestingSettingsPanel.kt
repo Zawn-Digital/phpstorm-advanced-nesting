@@ -21,7 +21,7 @@ import javax.swing.ListSelectionModel
  */
 class AdvancedNestingSettingsPanel(private val project: Project) {
 
-    private val enabledCheckBox = JBCheckBox("Enable Advanced Nesting")
+    private val enabledCheckBox = JBCheckBox("Enable File & Directory Nesting")
     private val extensionListModel = DefaultListModel<String>()
     private val extensionList = JBList(extensionListModel).apply {
         selectionMode = ListSelectionModel.SINGLE_SELECTION

@@ -15,7 +15,7 @@ class AdvancedNestingConfigurable(private val project: Project) : SearchableConf
 
     override fun getId(): String = "editor.advanced.nesting"
 
-    override fun getDisplayName(): String = "Advanced Nesting"
+    override fun getDisplayName(): String = "File & Directory Nesting"
 
     override fun createComponent(): JComponent {
         settingsPanel = AdvancedNestingSettingsPanel(project)

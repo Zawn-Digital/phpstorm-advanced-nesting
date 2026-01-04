@@ -32,6 +32,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.2.2</h3>
+    <ul>
+        <li>Improved: Consistent branding - renamed to "File &amp; Directory Nesting" across UI and marketplace</li>
+    </ul>
     <h3>1.2.1</h3>
     <ul>
         <li>Fixed: Settings panel height no longer jitters when adding/removing extensions</li>
@@ -76,7 +80,7 @@
             parentId="editor.general"
             instance="com.zawndigital.advancednesting.settings.AdvancedNestingConfigurable"
             id="editor.advanced.nesting"
-            displayName="Advanced Nesting"/>
+            displayName="File &amp; Directory Nesting"/>
 
         <!-- Project View Refresh on Settings Change -->
         <postStartupActivity
