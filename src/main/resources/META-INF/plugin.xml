@@ -22,10 +22,16 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.2.1</h3>
+    <ul>
+        <li>Fixed: Settings panel height no longer jitters when adding/removing extensions</li>
+    </ul>
     <h3>1.2.0</h3>
     <ul>
+        <li>Fixed: Remove button now works correctly in settings panel</li>
         <li>Fixed: Tree now refreshes immediately when settings are changed</li>
         <li>Improved: Settings panel moved to Editor → General (near File Nesting)</li>
+        <li>Improved: Now compatible with all JetBrains IDEs (RubyMine, WebStorm, IntelliJ IDEA, etc.)</li>
         <li>Added: Help text with link to standard File Nesting settings</li>
     </ul>
     <h3>1.1.0</h3>
@@ -42,9 +48,8 @@
     </ul>
     ]]></change-notes>
 
-    <!-- Require PhpStorm 2023.3+ -->
+    <!-- Compatible with all IntelliJ Platform-based IDEs -->
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.jetbrains.php</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Tree Structure Provider -->

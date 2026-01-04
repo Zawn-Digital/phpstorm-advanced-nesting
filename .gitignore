@@ -19,6 +19,7 @@ out/
 
 # Kotlin
 *.kotlin_module
+*.salive
 
 # macOS
 .DS_Store

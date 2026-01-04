@@ -12,6 +12,7 @@ import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.UIUtil
 import java.awt.BorderLayout
 import javax.swing.*
+import javax.swing.ListSelectionModel
 
 /**
  * UI panel for Advanced Nesting settings.
@@ -22,7 +23,10 @@ class AdvancedNestingSettingsPanel(private val project: Project) {
 
     private val enabledCheckBox = JBCheckBox("Enable Advanced Nesting")
     private val extensionListModel = DefaultListModel<String>()
-    private val extensionList = JBList(extensionListModel)
+    private val extensionList = JBList(extensionListModel).apply {
+        selectionMode = ListSelectionModel.SINGLE_SELECTION
+        visibleRowCount = 6
+    }
     private val addExtensionField = JBTextField()
     private val addButton = JButton("Add")
     private val removeButton = JButton("Remove")
@@ -60,9 +64,14 @@ class AdvancedNestingSettingsPanel(private val project: Project) {
             add(fileNestingLink, BorderLayout.SOUTH)
         }
 
+        val scrollPane = JBScrollPane(extensionList).apply {
+            preferredSize = java.awt.Dimension(400, 120)
+            minimumSize = java.awt.Dimension(200, 120)
+        }
+
         val listPanel = JPanel(BorderLayout()).apply {
             border = JBUI.Borders.empty(5)
-            add(JBScrollPane(extensionList), BorderLayout.CENTER)
+            add(scrollPane, BorderLayout.CENTER)
 
             val buttonPanel = JPanel().apply {
                 layout = BoxLayout(this, BoxLayout.Y_AXIS)

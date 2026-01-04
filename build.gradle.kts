@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.zawndigital"
-version = "1.2.0"
+version = "1.2.1"
 
 repositories {
     mavenCentral()
@@ -22,7 +22,6 @@ dependencies {
 
     intellijPlatform {
         phpstorm(providers.gradleProperty("platformVersion"))
-        bundledPlugin("com.jetbrains.php")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
     }
 }
